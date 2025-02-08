@@ -1,0 +1,39 @@
+--- 
+- name: Deploy Webserver on VM1 and VM2 
+hosts: webservers 
+  become: true 
+  tasks: 
+    - name: Install Apache Web Server 
+      apt: 
+        name: apache2 
+        state: present 
+        update_cache: yes 
+ 
+    - name: Change Apache port to 8080 
+      lineinfile: 
+        path: /etc/apache2/ports.conf 
+        regexp: "^Listen 80" 
+        line: "Listen 8080" 
+ 
+    - name: Change Virtual Host to 8080 
+      replace: 
+        path: /etc/apache2/sites-available/000-default.conf 
+        regexp: "VirtualHost \\*:80" 
+        replace: "VirtualHost *:8080" 
+ 
+    - name: Restart Apache service 
+      service: 
+        name: apache2 
+        state: restarted 
+ 
+    - name: Deploy custom index.html for VM1 
+      copy: 
+        content: "Hello World from SJSU-1" 
+        dest: /var/www/html/index.html 
+      when: "'vm1' in inventory_hostname" 
+ 
+    - name: Deploy custom index.html for VM2 
+      copy: 
+        content: "Hello World from SJSU-2" 
+        dest: /var/www/html/index.html 
+      when: "'vm2' in inventory_hostname"

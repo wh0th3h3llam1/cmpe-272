@@ -1,0 +1,19 @@
+---
+- name: Un-Deploy Webserver from VM1 and VM2
+  hosts: webservers
+  become: true
+  tasks:
+    - name: Stop Apache Service
+      service:
+        name: apache2
+        state: stopped
+
+    - name: Remove Apache Package
+      apt:
+        name: apache2
+        state: absent
+
+    - name: Remove Web Files
+      file:
+        path: /var/www/html/index.html
+        state: absent
