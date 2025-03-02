@@ -1,0 +1,30 @@
+<!--# Author: Shivani Jariwala and Aishwarya Indi-->
+<!--# Team Puma-->
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mastodon API Integration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Mastodon API Integration</h1>
+
+        <div id="messageBox"></div>
+
+        <h2>Create Post</h2>
+        <textarea id="postContent" placeholder="Write something..."></textarea>
+        <button onclick="createPost()">Post</button>
+        <input type="text" id="postId" placeholder="Enter Post ID">
+        <button onclick="getPost()">Fetch Post</button>
+        <button onclick="deletePost()">Delete Post</button>
+        <h2>User Details</h2>
+        <button onclick="getUserDetails()">Get User Info</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
